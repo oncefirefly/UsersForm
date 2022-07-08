@@ -1,0 +1,38 @@
+li {
+  margin: 20px 0;
+}
+
+.user {
+  max-width: 100%;
+  border-radius: 8px;
+  background-color: #f3f3f3;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  button {
+    display: flex;
+    max-width: 70px;
+    max-height: 14px;
+    color: #4b51ef;
+    align-self: flex-end;
+
+    a {
+      font-size: 12px;
+      line-height: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
+.user__data {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+
+  span {
+    color: #a3a3a3;
+    margin-right: 10px;
+  }
+}

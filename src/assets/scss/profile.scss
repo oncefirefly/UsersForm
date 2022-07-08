@@ -1,0 +1,41 @@
+.user-profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile__title {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.user-profile__edit {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 10px;
+  color: #ffffff;
+  background-color: #4b51ef;
+  border-radius: 5px;
+}
+
+form {
+  padding: 30px 20px;
+  background-color: #ffffff;
+  border: 1px solid #f3f3f3;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  input {
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+}

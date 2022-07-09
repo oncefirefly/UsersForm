@@ -1,11 +1,13 @@
 <template>
-  <div class="max-w-screen-md min-w-xs mx-auto my-10">
+  <div class="max-w-screen-md min-w-xs mx-auto my-10 px-10">
     <section class="user-profile">
       <div class="user-profile__title">
         <h2>User Profile</h2>
-        <button class="user-profile__edit">Edit Profile</button>
+        <button @click="switchEditingMode" class="user-profile__edit">
+          Edit Profile
+        </button>
       </div>
-      <form>
+      <form class="flex flex-col gap-5">
         <label for="fullName"
           >Name
           <input
@@ -13,7 +15,8 @@
             name="fullName"
             type="input"
             :placeholder="[[name]]"
-            disabled
+            :disabled="!editingMode"
+            required
         /></label>
 
         <label for="userName"
@@ -22,12 +25,16 @@
             type="input"
             name="userName"
             :placeholder="[[username]]"
-            disabled
+            :disabled="!editingMode"
         /></label>
 
         <label for="mail"
           >E-mail
-          <input type="input" name="mail" :placeholder="[[email]]" disabled
+          <input
+            type="input"
+            name="mail"
+            :placeholder="[[email]]"
+            :disabled="!editingMode"
         /></label>
 
         <label for="company"
@@ -36,32 +43,55 @@
             type="input"
             name="company"
             :placeholder="[[company]]"
-            disabled
+            :disabled="!editingMode"
         /></label>
 
         <label for="city"
           >City
-          <input type="input" name="city" :placeholder="[[city]]" disabled
+          <input
+            type="input"
+            name="city"
+            :placeholder="[[city]]"
+            :disabled="!editingMode"
         /></label>
 
         <label for="zip"
           >Zip Code
-          <input type="input" name="zip" :placeholder="[[zipcode]]" disabled
+          <input
+            type="input"
+            name="zip"
+            :placeholder="[[zipcode]]"
+            :disabled="!editingMode"
         /></label>
 
         <label for="phone"
           >Phone
-          <input type="input" name="phone" :placeholder="[[phone]]" disabled
+          <input
+            type="input"
+            name="phone"
+            :placeholder="[[phone]]"
+            :disabled="!editingMode"
         /></label>
 
         <label for="site"
           >Website
-          <input type="input" name="site" :placeholder="[[website]]" disabled
+          <input
+            type="input"
+            name="site"
+            :placeholder="[[website]]"
+            :disabled="!editingMode"
         /></label>
 
         <label for="comment"
-          >Comment <textarea name="comment" disabled></textarea>
+          >Comment <textarea name="comment" :disabled="!editingMode"></textarea>
         </label>
+
+        <div class="flex justify-end gap-5">
+          <button class="user-profile__edit save-btn">Save</button>
+          <button class="user-profile__edit cancel-btn">
+            <router-link to="/users">Cancel</router-link>
+          </button>
+        </div>
       </form>
     </section>
   </div>
@@ -111,7 +141,22 @@ export default {
   data() {
     return {
       uName: '',
+      uUserName: '',
+      uEmail: '',
+      uCompany: '',
+      uCity: '',
+      uZipcode: '',
+      uPhone: '',
+      uWebsite: '',
+
+      editingMode: false,
     };
+  },
+
+  methods: {
+    switchEditingMode() {
+      this.editingMode = true;
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-md min-w-xs mx-auto my-10">
+  <div class="max-w-screen-md min-w-xs mx-auto my-10 px-10">
     <section class="users">
       <h2 class="users__title">Users List</h2>
       <ul class="list-none">

@@ -3,7 +3,7 @@
     <section class="user-profile">
       <div class="user-profile__title">
         <h2>User Profile</h2>
-        <button @click="switchEditingMode" class="user-profile__edit">
+        <button @click="switchEditingMode" class="user-profile__edit-btn btn">
           Edit Profile
         </button>
       </div>
@@ -87,13 +87,32 @@
         </label>
 
         <div class="flex justify-end gap-5">
-          <button class="user-profile__edit save-btn">Save</button>
-          <button class="user-profile__edit cancel-btn">
-            <router-link to="/users">Cancel</router-link>
+          <button class="btn">Save</button>
+          <button @click.prevent="switchModalState" class="cancel-btn btn">
+            Cancel
           </button>
         </div>
       </form>
     </section>
+
+    <div v-if="modalIsOpened" class="modal">
+      <div class="modal__inner">
+        <div class="modal__text">
+          <p>
+            All unsaved changes will be lost. <br />
+            Leave this page?
+          </p>
+        </div>
+        <div class="modal__btns">
+          <button class="btn">
+            <router-link to="/users">Yes</router-link>
+          </button>
+          <button @click.prevent="switchModalState" class="cancel-btn btn">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -150,12 +169,17 @@ export default {
       uWebsite: '',
 
       editingMode: false,
+      modalIsOpened: false,
     };
   },
 
   methods: {
     switchEditingMode() {
       this.editingMode = true;
+    },
+
+    switchModalState() {
+      this.modalIsOpened = this.modalIsOpened ? false : true;
     },
   },
 };

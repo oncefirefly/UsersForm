@@ -11,79 +11,149 @@
         <label for="fullName"
           >Name
           <input
-            v-model="uName"
+            v-model="pName"
             name="fullName"
             type="input"
             :placeholder="[[name]]"
-            :disabled="!editingMode"
-            required
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pName)"
+          />
+          <template v-if="v$.pName.$error">
+            <span class="validation__warning" v-if="v$.pName.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
         <label for="userName"
           >User Name
           <input
+            v-model="pUserName"
             type="input"
             name="userName"
             :placeholder="[[username]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pUserName)"
+          />
+          <template v-if="v$.pUserName.$error">
+            <span class="validation__warning" v-if="v$.pUserName.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
         <label for="mail"
           >E-mail
           <input
+            v-model="pEmail"
             type="input"
             name="mail"
             :placeholder="[[email]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pEmail)"
+          />
+          <template v-if="v$.pEmail.$error">
+            <span class="validation__warning" v-if="v$.pEmail.required"
+              >This field is required.</span
+            >
+            <span class="validation__warning" v-if="v$.pEmail.email"
+              >Email is invalid</span
+            >
+          </template>
+        </label>
 
         <label for="company"
           >Company
           <input
+            v-model="pCompany"
             type="input"
             name="company"
             :placeholder="[[company]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pCompany)"
+          />
+          <template v-if="v$.pCompany.$error">
+            <span class="validation__warning" v-if="v$.pCompany.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
         <label for="city"
           >City
           <input
+            v-model="pCity"
             type="input"
             name="city"
             :placeholder="[[city]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pCity)"
+          />
+          <template v-if="v$.pCity.$error">
+            <span class="validation__warning" v-if="v$.pCity.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
         <label for="zip"
           >Zip Code
           <input
+            v-model="pZipcode"
             type="input"
             name="zip"
             :placeholder="[[zipcode]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pZipcode)"
+          />
+          <template v-if="v$.pZipcode.$error">
+            <span class="validation__warning" v-if="v$.pZipcode.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
         <label for="phone"
           >Phone
           <input
+            v-model="pPhone"
             type="input"
             name="phone"
             :placeholder="[[phone]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pPhone)"
+          />
+          <template v-if="v$.pPhone.$error">
+            <span class="validation__warning" v-if="v$.pPhone.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
-        <label for="site"
+        <label for="website"
           >Website
           <input
+            v-model="pWebsite"
             type="input"
-            name="site"
+            name="website"
             :placeholder="[[website]]"
-            :disabled="!editingMode"
-        /></label>
+            :readonly="!editingMode"
+            @blur="switchValidationState(v$.pWebsite)"
+          />
+          <template v-if="v$.pWebsite.$error">
+            <span class="validation__warning" v-if="v$.pWebsite.required"
+              >This field is required.</span
+            >
+          </template>
+        </label>
 
         <label for="comment"
-          >Comment <textarea name="comment" :disabled="!editingMode"></textarea>
+          >Comment
+          <textarea
+            v-model="pComment"
+            name="comment"
+            :readonly="!editingMode"
+          ></textarea>
         </label>
 
         <div class="flex justify-end gap-5">
@@ -117,6 +187,9 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
+
 export default {
   props: {
     id: {
@@ -157,19 +230,37 @@ export default {
     },
   },
 
+  setup() {
+    return { v$: useVuelidate() };
+  },
+
   data() {
     return {
-      uName: '',
-      uUserName: '',
-      uEmail: '',
-      uCompany: '',
-      uCity: '',
-      uZipcode: '',
-      uPhone: '',
-      uWebsite: '',
+      pName: '',
+      pUserName: '',
+      pEmail: '',
+      pCompany: '',
+      pCity: '',
+      pZipcode: '',
+      pPhone: '',
+      pWebsite: '',
+      pComment: '',
 
       editingMode: false,
       modalIsOpened: false,
+    };
+  },
+
+  validations() {
+    return {
+      pName: { required },
+      pUserName: { required },
+      pEmail: { required, email },
+      pCompany: { required },
+      pCity: { required },
+      pZipcode: { required },
+      pPhone: { required },
+      pWebsite: { required },
     };
   },
 
@@ -180,6 +271,12 @@ export default {
 
     switchModalState() {
       this.modalIsOpened = this.modalIsOpened ? false : true;
+    },
+
+    switchValidationState(field) {
+      if (this.editingMode) {
+        field.$touch();
+      } else return;
     },
   },
 };
